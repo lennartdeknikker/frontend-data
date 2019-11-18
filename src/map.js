@@ -45,4 +45,4 @@ function areaClickHandler(d) {
     d3.select(this).attr('fill', '#00aaa0')
 }
 
-export {loadMap};
+export { loadMap };
