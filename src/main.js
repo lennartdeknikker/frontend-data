@@ -1,6 +1,7 @@
 import "babel-polyfill";
 import { loadMap } from "./map.js";
 import { loadData, adjustCirclesToZoomLevel } from "./data.js"
+import { addZoomToSvg } from "./zoom.js"
 
 // endpoint and query definitions
 const queryAncestorStatues = `
@@ -47,37 +48,12 @@ const settings = {
   }
 }
 
-// adds zoom functionality to map
-const zoom = d3
-  .zoom()
-  .scaleExtent(settings.render.scaleExtent)
-  .on('zoom', zoomHandler);
-
-function zoomHandler() {
-  g.attr('transform', d3.event.transform);
-  adjustCirclesToZoomLevel(d3.event.transform.k, g, settings);
-}
-
-function clickToZoom(zoomStep) {
-  svg
-    .transition()
-    .duration(500)
-    .call(zoom.scaleBy, zoomStep);
-}
-
-// makes it possible to zoom on click with adjustable steps
-d3.select('#btn-zoom--in').on('click', () => clickToZoom(2));
-d3.select('#btn-zoom--out').on('click', () => clickToZoom(.5));
-
-// loads the svg in the map container
+// svg settings
 const svg = d3
   .select('#map_container')
   .append('svg')
   .attr('width', '100%')
   .attr('height', '100%')
-
-// adds the zoom functionality to the svg
-const g = svg.call(zoom).append('g');
 
 // map projection settings
 const projection = d3
@@ -86,6 +62,7 @@ const projection = d3
   .scale(1600)
   .translate([window.innerWidth / 1.8, window.innerHeight/2.3]);
 
-// this code loads the map, then loads the data
-loadMap(settings.init.mapJson, g, projection)
-.then(loadData(settings.init.endpoint, settings.init.query, g, projection, settings));
+// add zoom functionality to svg, then load the map, then load the datapoints
+addZoomToSvg(settings, svg)
+.then( g => loadMap(settings.init.mapJson, g, projection)
+  .then( loadData(settings.init.endpoint, settings.init.query, g, projection, settings) ))
