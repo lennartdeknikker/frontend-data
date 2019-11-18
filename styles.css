@@ -23,6 +23,7 @@ body {
   min-width: 20rem;
   min-height: 75vh;
   width: 100%;
+  cursor: pointer;
 }
 
 .g-datapoints {
