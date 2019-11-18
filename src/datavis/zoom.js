@@ -10,10 +10,11 @@ async function addZoomToSvg(settings, svg) {
     }
 
     function addZoomHandlers(zoom, g, settings) {
+        const group = g;
         zoom.on('zoom', zoomHandler);
         
         function zoomHandler() {
-            g.attr('transform', d3.event.transform);
+            group.attr('transform', d3.event.transform);
             adjustCirclesToZoomLevel(d3.event.transform.k, g, settings);
         }
         
@@ -27,13 +28,15 @@ async function addZoomToSvg(settings, svg) {
         // makes it possible to zoom on click with adjustable steps
         d3.select('#btn-zoom--in').on('click', () => clickToZoom(2));
         d3.select('#btn-zoom--out').on('click', () => clickToZoom(.5));
+        return group;
     }
 
 const g = addZoom(settings).then( zoom => {      
         const g = svg.call(zoom).append('g');
-        addZoomHandlers(zoom, g, settings);
-        return g;
+        const group = addZoomHandlers(zoom, g, settings);
+        return group;
     })
+    
 return g;
 }
 

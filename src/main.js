@@ -1,7 +1,6 @@
+// imports
 import "babel-polyfill";
-import { loadMap } from "./map.js";
-import { loadData, adjustCirclesToZoomLevel } from "./data.js"
-import { addZoomToSvg } from "./zoom.js"
+import { AddDataVisualisation } from './datavis/datavis.js'
 
 // endpoint and query definitions
 const queryAncestorStatues = `
@@ -37,32 +36,22 @@ GROUP BY ?identifier ?title ?place ?placeName ?type ?imageLink ?lat ?long ?exten
 // application settings
 const settings = {
   init: {
+    targetDiv: '#map_container',
     endpoint: "https://api.data.netwerkdigitaalerfgoed.nl/datasets/ivo/NMVW/services/NMVW-29/sparql",
     query: queryAncestorStatues,
-    mapJson: 'https://raw.githubusercontent.com/rifani/geojson-political-indonesia/master/IDN_adm_1_province.json'
+    mapJson: 'https://raw.githubusercontent.com/rifani/geojson-political-indonesia/master/IDN_adm_1_province.json',
+    svgSize: ['100%', '100%']
   },
   render: {
     scaleExtent: [.5, 20],
     minValueInData: 3,
     maxValueInData: 200
+  },
+  projection: {
+    center: [120,-5],
+    scale: 1600,
+    translation: [window.innerWidth / 1.8, window.innerHeight/2.3]
   }
 }
 
-// svg settings
-const svg = d3
-  .select('#map_container')
-  .append('svg')
-  .attr('width', '100%')
-  .attr('height', '100%')
-
-// map projection settings
-const projection = d3
-  .geoMercator()
-  .center([120, -5])
-  .scale(1600)
-  .translate([window.innerWidth / 1.8, window.innerHeight/2.3]);
-
-// add zoom functionality to svg, then load the map, then load the datapoints
-addZoomToSvg(settings, svg)
-.then( g => loadMap(settings.init.mapJson, g, projection)
-  .then( loadData(settings.init.endpoint, settings.init.query, g, projection, settings) ))
+AddDataVisualisation(settings);
