@@ -1,6 +1,6 @@
 // imports
 import "babel-polyfill";
-import { AddDataVisualisation } from './datavis/datavis.js'
+import { AddDataVisualisation } from './datavis/index.js'
 
 // endpoint and query definitions
 const queryAncestorStatues = `
