@@ -1,5 +1,5 @@
 # Indonesian Ancestor Statues Map
-this repo contains my assignment material for the course [functional programming](https://github.com/cmda-tt/course-19-20). The assignment entails visualizing data obtained from the Museum Volkenkunde's objects database using the [D3 Library](https://github.com/d3/d3).
+this repo contains my assignment material for the course [Frontend Data](https://github.com/cmda-tt/course-19-20). The assignment entails visualizing data obtained from the Museum Volkenkunde's objects database using the [D3 Library](https://github.com/d3/d3).
 
 **This current version shows all Indonesian ancestor statues on a map.**
 
@@ -22,10 +22,10 @@ As you zoom in some more, the circles will shrink and lose their opacity so it's
 *Maximal zoom*
 ![screenshot](./wiki-resources/screenshots/current_application_screenshot3.png)
 
-Check out my [wiki](https://github.com/lennartdeknikker/functional-programming/wiki/Concept) for more information on the concept.
+Check out my [wiki](https://github.com/lennartdeknikker/frontend-data/wiki/) for more information on the concept.
 
 ## Usage
-1. clone this repo using `git clone https://github.com/lennartdeknikker/functional-programming.git`
+1. clone this repo using `git clone https://github.com/lennartdeknikker/frontend-data.git`
 2. Open `index.html` to view the application
 
 ## Settings
@@ -47,7 +47,7 @@ This application is built with:
 
 
 ## Used Data
-The data used in this application is provided by the [Museum Volkenkunde](https://www.volkenkunde.nl/). They recently published their collection data. The data is obtained using [SPARQL](https://en.wikipedia.org/wiki/SPARQL) queries. The query used in this example is part of the code and can easily be changed to obtain different data to plot on the map. More information on the used data and queries can be found in the [wiki](https://github.com/lennartdeknikker/functional-programming/wiki/Data-and-SPARQL-queries)
+The data used in this application is provided by the [Museum Volkenkunde](https://www.volkenkunde.nl/). They recently published their collection data. The data is obtained using [SPARQL](https://en.wikipedia.org/wiki/SPARQL) queries. The query used in this example is part of the code and can easily be changed to obtain different data to plot on the map. More information on the used data and queries can be found in the [wiki](https://github.com/lennartdeknikker/frontend-data/wiki/)
 
 ## Functional Patterns
 The assignment also entailed writing a functional pattern in JavaScript to clean up the data. The data I needed was clean by itself, so I wrote a pattern cleaning up the object extent data, which can be found [here](https://github.com/lennartdeknikker/extent-preprocessor)).
