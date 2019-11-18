@@ -1,3 +1,6 @@
+import "babel-polyfill";
+import { loadMap } from "./map.js";
+
 // endpoint and query definitions
 const queryAncestorStatues = `
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -43,14 +46,8 @@ const settings = {
   }
 }
 
-// this code loads the map, then loads the data
-loadMap(settings.init.mapJson)
-.then(loadData(settings.init.endpoint, settings.init.query));
 
-async function loadMap(geoJson) {
-d3.json(geoJson)
-.then(mapData => renderMap(mapData))
-}
+
 
 function loadData(endpoint, query) {
 d3.json(endpoint + "?query=" + encodeURIComponent(query) + "&format=json")
@@ -96,26 +93,7 @@ function zoomHandler() {
   adjustCirclesToZoomLevel(d3.event.transform.k);
 }
 
-// changes fill color of areas on mouse over and mouse out
-function mouseOverHandler(d, i) {
-  let element = d3.select(this);
-  if (element.attr('fill') !== '#00aaa0') {
-    element.attr('fill', '#9aeae6')
-  }
-}
-function mouseOutHandler(d, i) {
-  let element = d3.select(this);
-  if (element.attr('fill') !== '#00aaa0') {
-    element.attr('fill', 'white')
-  }
-}
 
-// updates the selected area on click an changes it's fill color
-function areaClickHandler(d) {
-  d3.select('#map_text').text(`You've selected ${d.properties.NAME_1}`)
-  d3.selectAll('.area').attr('fill', 'white');
-  d3.select(this).attr('fill', '#00aaa0')
-}
 
 // loads a list of selected objects
 function objectClickHandler(d, i) {
@@ -171,27 +149,6 @@ const projection = d3
   .scale(1600)
   .translate([window.innerWidth / 1.8, window.innerHeight/2.3]);
 
-const path = d3.geoPath().projection(projection);
-
-// renders the map from a given geoJson
-function renderMap(geoJson) {
-  g
-  .append('g')
-  .attr('class', 'g-map')
-  .selectAll('path')
-  .data(geoJson.features)
-  .enter()
-  .append('path')
-  .attr('class', 'area')
-  .attr('d', path)
-  .attr('fill', 'white')
-  .attr('stroke', '#c1eae8')
-  .attr('stroke-width', 0.5)
-  .on('mouseover', mouseOverHandler)
-  .on('mouseout', mouseOutHandler)
-  .on('click', areaClickHandler);
-}
-
 // renders the datapoints
 function renderObjects(objects) {
   g
@@ -240,3 +197,7 @@ function adjustCirclesToZoomLevel(zoomLevel) {
     .attr('fill-opacity', 1)
   }
 }
+
+// this code loads the map, then loads the data
+loadMap(settings.init.mapJson, g, projection)
+.then(loadData(settings.init.endpoint, settings.init.query));
