@@ -1,0 +1,100 @@
+/* 
+$c1: #ffffff;
+$c2:#c1eae8;
+$c3: #00aaa0;
+$c4:#00827b;
+*/
+
+html, body {
+  height: 100%;
+  background-color: #c1eae8;
+  margin: 0;
+  font-family: Montserrat, Helvetica, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#map_container {
+  height: 75%;
+  background-color: c1eae8;
+  min-width: 20rem;
+  min-height: 75vh;
+  width: 100%;
+}
+
+.g-datapoints {
+  z-index: 1;
+}
+
+.g-map {
+  z-index: 0;
+}
+
+header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    min-width: 20rem;
+}
+
+.header-message-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: #00aaa0;
+    font-weight: bold;
+}
+
+.logo {
+    max-width: 5rem;
+    min-width: 4rem;
+    width: 10%;
+    position: absolute;
+    z-index: 10;
+}
+
+#map_header {
+  background-color: white;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 20%;
+  min-height: 15vh;
+  min-width: 20rem;
+  width: 100%;
+}
+
+h3, i {
+  color: #00aaa0;
+  font-size: 1em;
+}
+
+h3 {
+  margin: 0 0 1em;
+}
+
+.info h3 {
+  margin: 1em 1em;
+}
+
+.item-list {
+  font-weight: bold;
+}
+
+.sub-item-list {
+  font-weight: normal;
+}
+
+.object-image {
+  width: 4em;
+}
