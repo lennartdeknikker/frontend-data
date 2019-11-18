@@ -77,7 +77,6 @@ function adjustCirclesToZoomLevel(zoomLevel, g, settings) {
     }
 }
 
-
 function transformData(source) {
     let transformed = d3.nest()
     .key(function(d) { return d.placeName.value})
@@ -91,4 +90,4 @@ function transformData(source) {
     return transformed;
 }
 
-export { loadData };
+export { loadData, adjustCirclesToZoomLevel };

@@ -1,6 +1,6 @@
 import "babel-polyfill";
 import { loadMap } from "./map.js";
-import { loadData } from "./data.js"
+import { loadData, adjustCirclesToZoomLevel } from "./data.js"
 
 // endpoint and query definitions
 const queryAncestorStatues = `
@@ -55,12 +55,8 @@ const zoom = d3
 
 function zoomHandler() {
   g.attr('transform', d3.event.transform);
-  adjustCirclesToZoomLevel(d3.event.transform.k);
+  adjustCirclesToZoomLevel(d3.event.transform.k, g, settings);
 }
-
-// makes it possible to zoom on click with adjustable steps
-d3.select('#btn-zoom--in').on('click', () => clickToZoom(2));
-d3.select('#btn-zoom--out').on('click', () => clickToZoom(.5));
 
 function clickToZoom(zoomStep) {
   svg
@@ -68,6 +64,10 @@ function clickToZoom(zoomStep) {
     .duration(500)
     .call(zoom.scaleBy, zoomStep);
 }
+
+// makes it possible to zoom on click with adjustable steps
+d3.select('#btn-zoom--in').on('click', () => clickToZoom(2));
+d3.select('#btn-zoom--out').on('click', () => clickToZoom(.5));
 
 // loads the svg in the map container
 const svg = d3
