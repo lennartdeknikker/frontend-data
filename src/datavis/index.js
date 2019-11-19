@@ -1,8 +1,10 @@
-import { loadMap } from "./map.js";
-import { loadData } from "./data.js"
-import { addZoomToSvg } from "./zoom.js"
+import { loadMap } from "./map";
+import { loadData } from "./data"
+import { addZoomToSvg } from "./zoom"
+import { getQueryFor } from './utilities'
 
 function AddDataVisualisation(settings) {
+    document.querySelector(settings.init.targetDiv).innerHTML = "";
     const svg = d3
         .select(settings.init.targetDiv)
         .append('svg')
@@ -19,7 +21,7 @@ function AddDataVisualisation(settings) {
     // add zoom functionality to svg, then load the map, then load the datapoints
     addZoomToSvg(settings, svg)
     .then( g => loadMap(settings.init.mapJson, g, projection)
-        .then( loadData(settings.init.endpoint, settings.init.query, g, projection, settings) ))
+        .then( loadData(settings.init.endpoint, getQueryFor(settings.init.keyWord), g, projection, settings) ))
 }
 
 export { AddDataVisualisation };

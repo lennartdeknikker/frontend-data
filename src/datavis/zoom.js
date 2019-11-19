@@ -1,4 +1,4 @@
-import { adjustCirclesToZoomLevel } from "./data.js"
+import { adjustCirclesToZoomLevel } from "./data"
 
 async function addZoomToSvg(settings, svg) {
 

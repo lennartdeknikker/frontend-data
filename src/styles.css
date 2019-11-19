@@ -17,11 +17,26 @@ body {
   flex-direction: column;
 }
 
+#search_bar {
+  background-color: #00aaa0;
+  padding: 1em 1em;
+  display: flex;
+  color: white;
+  width: 25%;
+  min-width: 20em;
+  margin: 1em;
+}
+
+#search_input {
+  margin-left: 1em;
+  width: 60%;
+}
+
 #map_container {
   height: 75%;
   background-color: c1eae8;
   min-width: 20rem;
-  min-height: 75vh;
+  min-height: 60vh;
   width: 100%;
   cursor: pointer;
 }
