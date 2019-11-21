@@ -12,7 +12,7 @@ import { AddDataVisualisation } from './datavis/index';
     },
     render: {
       scaleExtent: [.5, 20],
-      dataExtent: []
+      dataExtent: [0,1]
     },
     projection: {
       center: [120,-5],

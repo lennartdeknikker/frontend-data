@@ -1,5 +1,3 @@
-import { drawLegend } from './legend';
-
 async function addZoomToSvg(settings, svg) {
 
     async function addZoom(settings) {
@@ -24,20 +22,27 @@ async function addZoomToSvg(settings, svg) {
             .duration(500)
             .call(zoom.scaleBy, zoomStep);
         }
+
+        function resetProjection() {
+            svg.transition()
+            .duration(500)
+            .call(zoom.transform, d3.zoomIdentity);
+        }
         
         // makes it possible to zoom on click with adjustable steps
         d3.select('#btn-zoom--in').on('click', () => clickToZoom(2));
         d3.select('#btn-zoom--out').on('click', () => clickToZoom(.5));
+        d3.select('#search_input').on('click', () => resetProjection());
         return group;
     }
 
-const g = addZoom(settings).then( zoom => {      
+    const g = addZoom(settings).then( zoom => {      
         const g = svg.call(zoom).append('g');
         const group = addZoomHandlers(zoom, g, settings);
         return group;
     })
     
-return g;
+    return g;
 }
 
 // adjusts the circles to the zoomlevel

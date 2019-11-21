@@ -7,6 +7,7 @@ async function loadMap(geoJson, g, projection) {
 async function renderMap(geoJson, g, projection) {
     const path = d3.geoPath().projection(projection);
     g
+        .attr('class', 'g-map-container')
         .append('g')
         .attr('class', 'g-map')
         .selectAll('path')

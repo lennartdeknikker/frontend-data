@@ -11,7 +11,7 @@ function addLegend(settings) {
 }
 
 function drawLegend(svg, settings) {
-    if (document.querySelector('.legend-svg')) { 
+    if (document.querySelector('.legend-svg') && settings.render.dataExtent[1] != 0) { 
 
         d3.select('.g-legend').remove()
         svg

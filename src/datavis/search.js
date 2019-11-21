@@ -1,4 +1,4 @@
-import { loadData, updateDataPointsAndDataExtent } from './data';
+import { updateDataPointsAndDataExtent } from './data';
 import { getQueryFor } from './utilities';
 
 async function addSearch(g, projection, settings, endpoint) {
