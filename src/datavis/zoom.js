@@ -32,7 +32,7 @@ async function addZoomToSvg(settings, svg) {
         // makes it possible to zoom on click with adjustable steps
         d3.select('#btn-zoom--in').on('click', () => clickToZoom(2));
         d3.select('#btn-zoom--out').on('click', () => clickToZoom(.5));
-        d3.select('#search_input').on('click', () => resetProjection());
+        d3.select('#search_input').on('select', () => resetProjection());
         return group;
     }
 
