@@ -20,6 +20,10 @@ body {
 #map_tools {
   display: flex;
   align-items: center;
+  border-top: 1px solid #00aaa0;
+  background-color: #00aaa0;
+  justify-content: space-between;
+  width: 100%;
 }
 
 #search_bar {

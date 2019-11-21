@@ -1,4 +1,5 @@
-import { adjustCirclesToZoomLevel } from './zoom'
+import { adjustCirclesToZoomLevel } from './zoom';
+import { drawLegend } from './legend';
 
 // loads a list of selected objects
 function objectClickHandler(d) {
@@ -37,6 +38,7 @@ function transformData(source, settings) {
 
 // side effect to obtain data-extent and update settings
     settings.render.dataExtent = getExtent(transformed);
+    drawLegend(d3.select('.legend-svg'), settings);
     return transformed;
 }
 
@@ -45,7 +47,7 @@ function getExtent(data) {
     data.forEach( d => {
         currentHighest = d3.max([d.amount, currentHighest]);
     })
-    return [0, currentHighest];
+    return [1, currentHighest];
 }
 
 function updateDataPointsAndDataExtent(endpoint, query, g, projection, settings) {

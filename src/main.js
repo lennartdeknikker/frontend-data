@@ -12,17 +12,17 @@ import { AddDataVisualisation } from './datavis/index';
     },
     render: {
       scaleExtent: [.5, 20],
-      dataExtent: [3, 200]
+      dataExtent: []
     },
     projection: {
       center: [120,-5],
-      scale: 1600,
-      translation: [window.innerWidth / 1.8, window.innerHeight/2.3]
+      scale: 1400,
+      translation: [window.innerWidth / 2, window.innerHeight/2.6]
     },
     legend: {
+      enabled: true,
       targetDiv: "#legend",
-      width: "30em",
-      height: "8em"
+      height: "6.5em"
     }
   }
 
