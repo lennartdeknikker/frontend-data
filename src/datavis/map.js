@@ -19,16 +19,14 @@ async function renderMap(geoJson, g, projection) {
         .attr('stroke', '#c1eae8')
         .attr('stroke-width', 0.5)
         .on('mouseover', mouseOverHandler)
-        .on('mouseout', mouseOutHandler)
-        .on('click', areaClickHandler);
+        .on('mouseout', mouseOutHandler);
 }
 
 // changes fill color of areas on mouse over and mouse out
 function mouseOverHandler(d, i) {
+    d3.select('#map_text').text(d.properties.NAME_1)
     let element = d3.select(this);
-    if (element.attr('fill') !== '#00aaa0') {
-        element.attr('fill', '#9aeae6')
-    }
+    element.attr('fill', '#9aeae6')
 }
 
 function mouseOutHandler(d, i) {
@@ -36,13 +34,6 @@ function mouseOutHandler(d, i) {
     if (element.attr('fill') !== '#00aaa0') {
         element.attr('fill', 'white')
     }
-}
-
-// updates the selected area on click an changes it's fill color
-function areaClickHandler(d) {
-    d3.select('#map_text').text(`You've selected ${d.properties.NAME_1}`)
-    d3.selectAll('.area').attr('fill', 'white');
-    d3.select(this).attr('fill', '#00aaa0')
 }
 
 export { loadMap };

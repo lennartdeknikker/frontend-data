@@ -30,6 +30,8 @@ function drawLegend(svg, settings) {
             .append('circle')
                 .attr('cx', (d,i) => {return 40+100*i})
                 .attr('cy', (d,i) => (i == 0) ? 67 : 40)
+                .transition()
+                .duration(500)
                 .attr('r', (d,i) => (i == 0) ? 6 : 30)
                 .attr('fill', '#00827b')
                 .attr('stroke', 'white' );

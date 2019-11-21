@@ -20,7 +20,6 @@ body {
 #map_tools {
   display: flex;
   align-items: center;
-  border-top: 1px solid #00aaa0;
   background-color: #00aaa0;
   justify-content: space-between;
   width: 100%;
@@ -47,6 +46,9 @@ body {
   min-width: 20rem;
   min-height: 60vh;
   width: 100%;
+}
+
+.datapoint {
   cursor: pointer;
 }
 

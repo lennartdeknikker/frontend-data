@@ -3,6 +3,8 @@ import { drawLegend } from './legend';
 
 // loads a list of selected objects
 function objectClickHandler(d) {
+    d3.selectAll('.datapoint').attr('stroke', 'none');
+    d3.select(this).transition().duration(100).attr('fill', 'white').transition().duration(200).attr('stroke', '#00aaa0').attr('stroke-alignment', 'outer').attr('stroke-width', '2pt').attr('fill','#00827b' );
     let newHtml =`
     <h3>List of objects found at ${d.placeName}</h3>
     <ol class="item-list">
@@ -23,6 +25,16 @@ function objectClickHandler(d) {
     });
     newHtml += "</ol>";
     document.querySelector('.info').innerHTML = newHtml;
+}
+
+function objectMouseoverHandler(d) {
+    if (d3.select(this).attr('stroke') != '#00aaa0') 
+    d3.select(this).attr('fill', '#00aaa0');
+}
+
+function objectMouseoutHandler(d) {
+    if (d3.select(this).attr('stroke') != '#00aaa0')
+    d3.select(this).attr('fill', '#00827b');
 }
 
 function transformData(source, settings) {
@@ -78,6 +90,8 @@ function renderDataPoints(objects, g, projection, settings) {
         .attr('cx', d => projection([d.long, d.lat])[0])
         .attr('cy', d => projection([d.long, d.lat])[1])
         .attr('fill', '#00827b')
+        .on('mouseover', objectMouseoverHandler)
+        .on('mouseout', objectMouseoutHandler)
         .on('click', objectClickHandler);
     
     datapoints.exit().remove();
