@@ -1,4 +1,4 @@
-import { adjustCirclesToZoomLevel } from "./data"
+import { drawLegend } from './legend';
 
 async function addZoomToSvg(settings, svg) {
 
@@ -40,4 +40,34 @@ const g = addZoom(settings).then( zoom => {
 return g;
 }
 
-export { addZoomToSvg };
+// adjusts the circles to the zoomlevel
+function adjustCirclesToZoomLevel(zoomLevel, g, settings) {
+    const minRadius = (zoomLevel/3 < 2) ? 3 - (zoomLevel/3) : 1;
+    const maxRadius = (zoomLevel*7 < 37.5) ? 40 - (zoomLevel*7) : 2.5;
+    const maxZoomLevel = settings.render.scaleExtent[1];
+    const factor = (maxRadius-minRadius) / (settings.render.dataExtent[1]-settings.render.dataExtent[0]);
+
+    g.selectAll('circle')    
+    .transition()
+    .duration(500)
+    .attr('r', d => {
+        if (d.amount*factor < minRadius) {
+            return minRadius;
+        }
+        else if (d.amount*factor > maxRadius) {
+            return maxRadius;
+        }
+        else {
+            return d.amount*factor;
+        }
+    })
+    if (zoomLevel < maxZoomLevel/2) {
+        g.selectAll('.datapoint')
+        .attr('fill-opacity', (.3 + .7/zoomLevel))
+    } else {
+        g.selectAll('.datapoint')
+        .attr('fill-opacity', 1)
+    }
+}
+
+export { addZoomToSvg, adjustCirclesToZoomLevel };

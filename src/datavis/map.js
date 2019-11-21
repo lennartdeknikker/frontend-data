@@ -1,10 +1,10 @@
 async function loadMap(geoJson, g, projection) {
-    d3.json(geoJson)
+    await d3.json(geoJson)
     .then(mapData => renderMap(mapData, g, projection))
 }
 
 // renders the map from a given geoJson
-function renderMap(geoJson, g, projection) {
+async function renderMap(geoJson, g, projection) {
     const path = d3.geoPath().projection(projection);
     g
         .append('g')

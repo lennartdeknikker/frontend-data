@@ -1,34 +1,9 @@
-function loadData(endpoint, query, g, projection, settings) {
-    d3.json(endpoint + "?query=" + encodeURIComponent(query) + "&format=json")
-    .then(objects => { renderObjects(transformData(objects.results.bindings), g, projection, settings) })
-    }
-
-// renders the datapoints
-function renderObjects(objects, g, projection, settings) {
-    g
-    .append('g')
-    .attr('class', 'g-datapoints')
-    .selectAll('.datapoint')
-    .data(objects)
-    .enter()
-    .append('circle')
-    .attr('class', 'datapoint')
-    .attr('data-place', d => d.placeName)
-    .attr('data-long', d => d.long)
-    .attr('data-lat', d => d.lat)
-    .attr('cx', d => projection([d.long, d.lat])[0])
-    .attr('cy', d => projection([d.long, d.lat])[1])
-    .attr('fill', '#00827b')
-    .attr('fill-opacity', .5)
-    .on('click', objectClickHandler);
-    adjustCirclesToZoomLevel(1, g, settings);
-}
+import { adjustCirclesToZoomLevel } from './zoom'
 
 // loads a list of selected objects
 function objectClickHandler(d) {
-    console.log(d);
     let newHtml =`
-    <h3>List of statues found at ${d.placeName}</h3>
+    <h3>List of objects found at ${d.placeName}</h3>
     <ol class="item-list">
     `;
 
@@ -49,37 +24,9 @@ function objectClickHandler(d) {
     document.querySelector('.info').innerHTML = newHtml;
 }
 
-// adjusts the circles to the zoomlevel
-function adjustCirclesToZoomLevel(zoomLevel, g, settings) {
-    const minRadius = (zoomLevel/3 < 2) ? 3 - (zoomLevel/3) : 1;
-    const maxRadius = (zoomLevel*7 < 37.5) ? 40 - (zoomLevel*7) : 2.5;
-    const maxZoomLevel = settings.render.scaleExtent[1];
-    const factor = (maxRadius-minRadius) / (settings.render.maxValueInData-settings.render.minValueInData);
-
-    g.selectAll('circle')
-    .attr('r', d => {
-        if (d.amount*factor < minRadius) {
-            return minRadius;
-        }
-        else if (d.amount*factor > maxRadius) {
-            return maxRadius;
-        }
-        else {
-            return d.amount*factor;
-        }
-    })
-    if (zoomLevel < maxZoomLevel/2) {
-        g.selectAll('.datapoint')
-        .attr('fill-opacity', (.3 + .7/zoomLevel))
-    } else {
-        g.selectAll('.datapoint')
-        .attr('fill-opacity', 1)
-    }
-}
-
-function transformData(source) {
+function transformData(source, settings) {
     let transformed = d3.nest()
-    .key(function(d) { return d.placeName.value})
+    .key( d => {return d.placeName.value} )
     .entries(source);
     transformed.forEach(element => {
         element.amount = element.values.length;
@@ -87,7 +34,53 @@ function transformData(source) {
         element.long = element.values[0].long.value;
         element.lat = element.values[0].lat.value;
     });
+
+// side effect to obtain data-extent and update settings
+    settings.render.dataExtent = getExtent(transformed);
     return transformed;
 }
 
-export { loadData, adjustCirclesToZoomLevel };
+function getExtent(data) {
+    let currentHighest = 0;
+    data.forEach( d => {
+        currentHighest = d3.max([d.amount, currentHighest]);
+    })
+    return [0, currentHighest];
+}
+
+function updateDataPointsAndDataExtent(endpoint, query, g, projection, settings) {
+    if (!document.querySelector('.g-datapoints')) { 
+        g
+        .append('g')
+        .attr('class', 'g-datapoints');
+    }
+
+    d3.json(endpoint + "?query=" + encodeURIComponent(query) + "&format=json")
+    .then(objects => { renderDataPoints(transformData(objects.results.bindings, settings), g, projection, settings) })
+}
+
+function renderDataPoints(objects, g, projection, settings) {
+    
+    const datapoints = d3.select('.g-datapoints')
+        .selectAll('.datapoint')
+        .data(objects)
+        .attr('r', 0);
+
+    datapoints.enter()        
+        .append('circle')
+        .merge(datapoints)
+        .attr('class', 'datapoint')
+        .attr('data-place', d => d.placeName)
+        .attr('data-long', d => d.long)
+        .attr('data-lat', d => d.lat)
+        .attr('cx', d => projection([d.long, d.lat])[0])
+        .attr('cy', d => projection([d.long, d.lat])[1])
+        .attr('fill', '#00827b')
+        .on('click', objectClickHandler);
+    
+    datapoints.exit().remove();
+
+    adjustCirclesToZoomLevel(1, g, settings)
+}
+
+export { updateDataPointsAndDataExtent };

@@ -17,6 +17,11 @@ body {
   flex-direction: column;
 }
 
+#map_tools {
+  display: flex;
+  align-items: center;
+}
+
 #search_bar {
   background-color: #00aaa0;
   padding: 1em 1em;
@@ -42,11 +47,13 @@ body {
 }
 
 .g-datapoints {
+  position: relative;
   z-index: 1;
 }
 
 .g-map {
-  z-index: 0;
+  position: relative;
+  z-index: -1;
 }
 
 header {
