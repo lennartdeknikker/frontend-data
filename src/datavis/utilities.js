@@ -35,7 +35,9 @@ function generateHtmlListFor(objects, view) {
 	if (view == 'list') {
 		newHtml = `
 		<h3>List of ${objects.amount} objects found at ${objects.placeName}</h3>
-		<button id="image-button">images</button><button id="list-button" class="selected">details</button>
+		<div class="buttons">
+			<button id="image-button">images</button><button id="list-button" class="selected">details</button>
+		</div>
     <ol class="item-list list-view">
     `;
 
@@ -55,7 +57,9 @@ function generateHtmlListFor(objects, view) {
 	} else {
 		newHtml = `
 				<h3>List of ${objects.amount} objects found at ${objects.placeName}</h3>
-				<button id="image-button" class="selected">images</button><button id="list-button">details</button>
+				<div class="buttons">
+					<button id="image-button" class="selected">images</button><button id="list-button">details</button>
+				</div>
 				<div class="object-list image-view">
 			`;
 		objects.values.forEach(object => {
