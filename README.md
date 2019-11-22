@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c4d10ccf-41ae-4b4f-8b1b-8bc978f6786d/deploy-status)](https://app.netlify.com/sites/frosty-bardeen-0cc821/deploys)
+
 # Indonesian Ancestor Statues Map
 this repo contains my assignment material for the course [Frontend Data](https://github.com/cmda-tt/course-19-20). The assignment entails visualizing data obtained from the Museum Volkenkunde's objects database using the [D3 Library](https://github.com/d3/d3).
 

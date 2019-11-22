@@ -25,7 +25,7 @@ function objectClickHandler(d) {
     });
     newHtml += "</ol>";
     document.querySelector('.info').innerHTML = newHtml;
-    document.querySelector('.info').scrollIntoView({behavior: "smooth"});  
+    document.querySelector('.info').scrollIntoView({behavior: "smooth"})
 }
 
 function objectMouseoverHandler(d) {

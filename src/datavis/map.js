@@ -31,6 +31,7 @@ function mouseOverHandler(d, i) {
 }
 
 function mouseOutHandler(d, i) {
+    d3.select('#map_text').text('')
     let element = d3.select(this);
     if (element.attr('fill') !== '#00aaa0') {
         element.attr('fill', 'white')

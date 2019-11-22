@@ -33,6 +33,7 @@ async function addZoomToSvg(settings, svg) {
         d3.select('#btn-zoom--in').on('click', () => clickToZoom(2));
         d3.select('#btn-zoom--out').on('click', () => clickToZoom(.5));
         d3.select('#search_input').on('select', () => resetProjection());
+        d3.select('#search_input').on('click', () => resetProjection());
         return group;
     }
 
