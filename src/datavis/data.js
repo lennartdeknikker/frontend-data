@@ -125,6 +125,9 @@ function showList(d, type) {
 			element.classList.add('selected-image');
 		})
 	);
+	document.getElementById('scroll-to-top').addEventListener('click', () => {
+		document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
+	});
 }
 
 export { updateDataPointsAndDataExtent };

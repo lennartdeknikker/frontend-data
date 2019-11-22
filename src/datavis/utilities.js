@@ -36,7 +36,8 @@ function generateHtmlListFor(objects, view) {
 		newHtml = `
 		<h3>List of ${objects.amount} objects found at ${objects.placeName}</h3>
 		<div class="buttons">
-			<button id="image-button">images</button><button id="list-button" class="selected">details</button>
+			<div><button id="image-button">images</button><button id="list-button" class="selected">details</button></div>
+			<button id="scroll-to-top">back to top</button>
 		</div>
     <ol class="item-list list-view">
     `;
@@ -49,7 +50,7 @@ function generateHtmlListFor(objects, view) {
 									<li>Extent: ${value.extent.value}</li>
 									<li>Origin location: ${value.placeName.value} (${value.lat.value}, ${value.long.value})</li>
 							</ul>
-							<a href="${value.imageLink.value}"><img src="${value.imageLink.value}" class="object-image-list" /></a>
+							<a target="_blank"  href="${value.imageLink.value}"><img src="${value.imageLink.value}" class="object-image-list" /></a>
             </li>
         `;
 		});
@@ -58,7 +59,8 @@ function generateHtmlListFor(objects, view) {
 		newHtml = `
 				<h3>List of ${objects.amount} objects found at ${objects.placeName}</h3>
 				<div class="buttons">
-					<button id="image-button" class="selected">images</button><button id="list-button">details</button>
+					<div><button id="image-button" class="selected">images</button><button id="list-button">details</button></div>
+					<button id="scroll-to-top">back to top</button>
 				</div>
 				<div class="object-list image-view">
 			`;
