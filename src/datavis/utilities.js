@@ -1,5 +1,5 @@
 function getQueryFor(searchWord) {
-    return `
+	return `
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX dc: <http://purl.org/dc/elements/1.1/>
     PREFIX dct: <http://purl.org/dc/terms/>
@@ -28,6 +28,29 @@ function getQueryFor(searchWord) {
     }
     GROUP BY ?identifier ?title ?place ?placeName ?type ?imageLink ?lat ?long ?extent
     `;
-  }
+}
 
-export { getQueryFor };
+function GenerateHtmlListFor(objects) {
+	let newHtml = `
+    <h3>List of objects found at ${objects.placeName}</h3>
+    <ol class="item-list">
+    `;
+
+	objects.values.forEach(value => {
+		newHtml += `
+            <li>${value.title.value}
+            <ul class="sub-item-list">
+                <li>Identifier: ${value.identifierSample.value}</li>
+                <li>Extent: ${value.extent.value}</li>
+                <li>Image Link: <a href="${value.imageLink.value}">${value.imageLink.value}</a></li>
+                <li>Origin location: ${value.placeName.value} (${value.lat.value}, ${value.long.value})</li>
+            </ul>
+            <img src="${value.imageLink.value}" class="object-image" />
+            </li>
+        `;
+	});
+	newHtml += '</ol>';
+	return newHtml;
+}
+
+export { getQueryFor, GenerateHtmlListFor };

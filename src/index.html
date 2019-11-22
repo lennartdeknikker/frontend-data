@@ -1,35 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="https://d3js.org/d3.v5.js"></script>
-  <link rel="icon" type="image/x-icon" href="favicon.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="styles.css">
-  <title>Indonesian Ancestor Statues</title>
-</head>
-<body>
-  <header>
-      <a href="http://www.volkenkunde.nl/"><img src="./assets/logo-volkenkunde.svg" alt="logo volkenkunde" class="logo"></a>
-      <div class="header-message-block">
-          <span class="message">Indonesian Objects</span>
-      </div>
-  </header>
-  <div id="map_tools">
-    <div id="search_bar">Search for items: <input type="text" id="search_input"></div>
-    <div id="legend"></div>
-  </div>
-  <div id="map_container"></div>
-  <div id="map_footer">
-    <h3 id="map_text"></h3>
-    <div>
-      <i id="btn-zoom--in" class="fa fa-search-plus fa-2x" aria-hidden="true"></i>
-      <i id="btn-zoom--out"class="fa fa-search-minus fa-2x" aria-hidden="true"></i>
-    </div>
-  </div>
-  <div class="info"></div>
-  <script src="main.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<script src="https://d3js.org/d3.v5.js"></script>
+		<link rel="icon" type="image/x-icon" href="favicon.png" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<link rel="stylesheet" href="styles.css" />
+		<title>Indonesian Ancestor Statues</title>
+	</head>
+	<body>
+		<header>
+			<a href="http://www.volkenkunde.nl/"
+				><img
+					src="./assets/logo-volkenkunde.svg"
+					alt="logo volkenkunde"
+					class="logo"
+			/></a>
+			<div class="header-message-block">
+				<span class="message">Indonesian Objects</span>
+			</div>
+		</header>
+		<div id="map_tools">
+			<div id="search_bar">
+				Search for items: <input type="text" id="search_input" />
+			</div>
+			<div id="legend"></div>
+		</div>
+		<div id="map_container"></div>
+		<div id="map_footer">
+			<h3 id="map_text"></h3>
+			<div>
+				<i
+					id="btn-zoom--in"
+					class="fa fa-search-plus fa-2x"
+					aria-hidden="true"
+				></i>
+				<i
+					id="btn-zoom--out"
+					class="fa fa-search-minus fa-2x"
+					aria-hidden="true"
+				></i>
+			</div>
+		</div>
+		<div class="info"></div>
+		<script src="main.js"></script>
+	</body>
 </html>
