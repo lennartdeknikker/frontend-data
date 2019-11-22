@@ -21,7 +21,8 @@
 	"homepage": "https://github.com/lennartdeknikker/frontend-data#readme",
 	"devDependencies": {
 		"gh-pages": "^1.0.0",
-		"parcel-bundler": "^1.12.4"
+		"parcel-bundler": "^1.12.4",
+		"sass": "^1.23.7"
 	},
 	"dependencies": {
 		"babel-polyfill": "^6.26.0"
