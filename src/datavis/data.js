@@ -1,6 +1,6 @@
 import { adjustCirclesToZoomLevel } from './zoom';
 import { drawLegend } from './legend';
-import { GenerateHtmlListFor } from './utilities';
+import { generateHtmlListFor } from './utilities';
 
 // loads a list of selected objects
 function objectClickHandler(d) {
@@ -15,8 +15,7 @@ function objectClickHandler(d) {
 		.attr('stroke-alignment', 'outer')
 		.attr('stroke-width', '2pt')
 		.attr('fill', '#00827b');
-
-	document.querySelector('.info').innerHTML = GenerateHtmlListFor(d);
+	showList(d, 'image');
 	document.querySelector('.info').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -31,6 +30,7 @@ function objectMouseoutHandler(d) {
 }
 
 function transformData(source, settings) {
+	console.log(source);
 	let transformed = d3
 		.nest()
 		.key(d => {
@@ -47,6 +47,7 @@ function transformData(source, settings) {
 	// side effect to obtain data-extent and update settings
 	settings.render.dataExtent = getExtent(transformed);
 	drawLegend(d3.select('.legend-svg'), settings);
+	console.log(transformed);
 	return transformed;
 }
 
@@ -106,6 +107,24 @@ function renderDataPoints(objects, g, projection, settings) {
 	datapoints.exit().remove();
 
 	adjustCirclesToZoomLevel(1, g, settings);
+}
+
+function showList(d, type) {
+	document.querySelector('.info').innerHTML = generateHtmlListFor(d, type);
+	document.getElementById('list-button').addEventListener('click', () => {
+		showList(d, 'list');
+	});
+	document.getElementById('image-button').addEventListener('click', () => {
+		showList(d, 'image');
+	});
+	document.querySelectorAll('.object-image').forEach(element =>
+		element.addEventListener('click', () => {
+			document
+				.querySelectorAll('.object-image')
+				.forEach(element => element.classList.remove('selected-image'));
+			element.classList.add('selected-image');
+		})
+	);
 }
 
 export { updateDataPointsAndDataExtent };

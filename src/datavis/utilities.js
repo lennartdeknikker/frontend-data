@@ -30,27 +30,44 @@ function getQueryFor(searchWord) {
     `;
 }
 
-function GenerateHtmlListFor(objects) {
-	let newHtml = `
-    <h3>List of objects found at ${objects.placeName}</h3>
-    <ol class="item-list">
+function generateHtmlListFor(objects, view) {
+	let newHtml = '';
+	if (view == 'list') {
+		newHtml = `
+		<h3>List of ${objects.amount} objects found at ${objects.placeName}</h3>
+		<button id="image-button">images</button><button id="list-button" class="selected">details</button>
+    <ol class="item-list list-view">
     `;
 
-	objects.values.forEach(value => {
-		newHtml += `
-            <li>${value.title.value}
-            <ul class="sub-item-list">
-                <li>Identifier: ${value.identifierSample.value}</li>
-                <li>Extent: ${value.extent.value}</li>
-                <li>Image Link: <a href="${value.imageLink.value}">${value.imageLink.value}</a></li>
-                <li>Origin location: ${value.placeName.value} (${value.lat.value}, ${value.long.value})</li>
-            </ul>
-            <img src="${value.imageLink.value}" class="object-image" />
+		objects.values.forEach(value => {
+			newHtml += `
+						<li class="list-item">${value.title.value}
+							<ul class="sub-item-list">
+									<li>Identifier: ${value.identifierSample.value}</li>
+									<li>Extent: ${value.extent.value}</li>
+									<li>Origin location: ${value.placeName.value} (${value.lat.value}, ${value.long.value})</li>
+							</ul>
+							<a href="${value.imageLink.value}"><img src="${value.imageLink.value}" class="object-image-list" /></a>
             </li>
         `;
-	});
-	newHtml += '</ol>';
+		});
+		newHtml += '</ol>';
+	} else {
+		newHtml = `
+				<h3>List of ${objects.amount} objects found at ${objects.placeName}</h3>
+				<button id="image-button" class="selected">images</button><button id="list-button">details</button>
+				<div class="object-list image-view">
+			`;
+		objects.values.forEach(object => {
+			newHtml += `
+				<div class="object" data-object="${object.title.value}">
+				<img class="object-image" src="${object.imageLink.value}" />
+				</div>
+			`;
+		});
+		newHtml += `</div>`;
+	}
 	return newHtml;
 }
 
-export { getQueryFor, GenerateHtmlListFor };
+export { getQueryFor, generateHtmlListFor };

@@ -28,10 +28,10 @@ body {
 
 #search_bar {
 	background-color: #00aaa0;
-	padding: 1em 1em;
+	padding: 1em 1em 1em 0;
 	display: flex;
 	color: white;
-	width: 25%;
+	width: 30%;
 	min-width: 20em;
 	margin: 1em;
 }
@@ -120,12 +120,73 @@ h3 {
 
 .item-list {
 	font-weight: bold;
+	color: white;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 1em;
+	padding: 0;
 }
 
 .sub-item-list {
 	font-weight: normal;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.object-list {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .object-image {
-	width: 4em;
+	width: 10em;
+	height: 10em;
+	object-fit: cover;
+	object-position: center;
+	border: 2px solid #00827b;
+	margin: 0 0 1em 1em;
+	cursor: pointer;
+	transition: transform 0.5s;
+	background-color: white;
+}
+
+.object-image-list {
+	width: 5em;
+	height: 5em;
+	object-fit: cover;
+	object-position: center;
+	border: 2px solid #00827b;
+}
+
+button {
+	border: none;
+	background-color: #00827b;
+	margin: 0.2em 0.5em 1em 1em;
+	padding: 0.5em;
+	color: white;
+	cursor: pointer;
+}
+
+.selected {
+	border: 2px solid #00827b;
+	background-color: white;
+	color: #00827b;
+	font-weight: bold;
+	cursor: default;
+}
+
+.list-item {
+	display: flex;
+	justify-content: space-between;
+	background-color: #00827b;
+	padding: 1em;
+	margin: 0 1em 1em 0;
+	width: 46%;
+	min-width: 35em;
+}
+
+.selected-image {
+	transform: scale(2);
+	cursor: default;
 }

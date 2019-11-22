@@ -1,29 +1,29 @@
 {
-  "name": "frontend-data",
-  "version": "1.0.0",
-  "description": "A map showing collection items from the Volkenkunde Museum collection",
-  "main": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "gh-pages -d .",
-    "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lennartdeknikker/frontend-data.git"
-  },
-  "author": "Lennart de Knikker <me@lenn4RT.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lennartdeknikker/frontend-data/issues"
-  },
-  "homepage": "https://github.com/lennartdeknikker/frontend-data#readme",
-  "devDependencies": {
-    "gh-pages": "^1.0.0",
-    "parcel-bundler": "^1.12.4"
-  },
-  "dependencies": {
-    "babel-polyfill": "^6.26.0"
-  }
+	"name": "frontend-data",
+	"version": "1.0.0",
+	"description": "A map showing collection items from the Volkenkunde Museum collection",
+	"main": "",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"deploy": "gh-pages -d .",
+		"dev": "parcel src/index.html",
+		"build": "parcel build src/index.html"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lennartdeknikker/frontend-data.git"
+	},
+	"author": "Lennart de Knikker <me@lenn4RT.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/lennartdeknikker/frontend-data/issues"
+	},
+	"homepage": "https://github.com/lennartdeknikker/frontend-data#readme",
+	"devDependencies": {
+		"gh-pages": "^1.0.0",
+		"parcel-bundler": "^1.12.4"
+	},
+	"dependencies": {
+		"babel-polyfill": "^6.26.0"
+	}
 }
