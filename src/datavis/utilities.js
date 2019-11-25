@@ -32,7 +32,7 @@ function getQueryFor(searchWord) {
 
 function generateHtmlListFor(objects, view) {
 	let newHtml = '';
-	if (view == 'list') {
+	if (view === 'list') {
 		newHtml = `
 		<h3>List of ${objects.amount} objects found at ${objects.placeName}</h3>
 		<div class="buttons">
@@ -48,9 +48,13 @@ function generateHtmlListFor(objects, view) {
 							<ul class="sub-item-list">
 									<li>Identifier: ${value.identifierSample.value}</li>
 									<li>Extent: ${value.extent.value}</li>
-									<li>Origin location: ${value.placeName.value} (${value.lat.value}, ${value.long.value})</li>
+									<li>Origin location: ${value.placeName.value} (${value.lat.value}, ${
+				value.long.value
+			})</li>
 							</ul>
-							<a target="_blank"  href="${value.imageLink.value}"><img src="${value.imageLink.value}" class="object-image-list" /></a>
+							<a target="_blank"  href="${value.imageLink.value}"><img src="${
+				value.imageLink.value
+			}" class="object-image-list" /></a>
             </li>
         `;
 		});

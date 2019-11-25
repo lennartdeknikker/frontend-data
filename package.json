@@ -24,6 +24,7 @@
 		"sass": "^1.23.7"
 	},
 	"dependencies": {
-		"babel-polyfill": "^6.26.0"
+		"babel-polyfill": "^6.26.0",
+		"d3": "^5.14.2"
 	}
 }

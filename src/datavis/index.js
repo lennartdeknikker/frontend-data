@@ -1,3 +1,4 @@
+import { d3 } from 'd3';
 import { loadMap } from './map';
 import { addZoomToSvg } from './zoom';
 import { addSearch } from './search';

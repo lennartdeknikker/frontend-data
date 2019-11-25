@@ -1,6 +1,28 @@
+import { d3 } from 'd3';
 import { adjustCirclesToZoomLevel } from './zoom';
 import { drawLegend } from './legend';
 import { generateHtmlListFor } from './utilities';
+
+function showList(d, type) {
+	document.querySelector('.info').innerHTML = generateHtmlListFor(d, type);
+	document.getElementById('list-button').addEventListener('click', () => {
+		showList(d, 'list');
+	});
+	document.getElementById('image-button').addEventListener('click', () => {
+		showList(d, 'image');
+	});
+	document.querySelectorAll('.object-image').forEach(objectImage =>
+		objectImage.addEventListener('click', () => {
+			document
+				.querySelectorAll('.object-image')
+				.forEach(item => item.classList.remove('selected-image'));
+			objectImage.classList.add('selected-image');
+		})
+	);
+	document.getElementById('scroll-to-top').addEventListener('click', () => {
+		document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
+	});
+}
 
 // loads a list of selected objects
 function objectClickHandler(d) {
@@ -19,23 +41,28 @@ function objectClickHandler(d) {
 	document.querySelector('.info').scrollIntoView({ behavior: 'smooth' });
 }
 
-function objectMouseoverHandler(d) {
-	if (d3.select(this).attr('stroke') != '#00aaa0')
+function objectMouseoverHandler() {
+	if (d3.select(this).attr('stroke') !== '#00aaa0')
 		d3.select(this).attr('fill', '#00aaa0');
 }
 
-function objectMouseoutHandler(d) {
-	if (d3.select(this).attr('stroke') != '#00aaa0')
+function objectMouseoutHandler() {
+	if (d3.select(this).attr('stroke') !== '#00aaa0')
 		d3.select(this).attr('fill', '#00827b');
 }
 
+function getExtent(data) {
+	let currentHighest = 0;
+	data.forEach(d => {
+		currentHighest = d3.max([d.amount, currentHighest]);
+	});
+	return [1, currentHighest];
+}
+
 function transformData(source, settings) {
-	console.log(source);
-	let transformed = d3
+	const transformed = d3
 		.nest()
-		.key(d => {
-			return d.placeName.value;
-		})
+		.key(d => d.placeName.value)
 		.entries(source);
 	transformed.forEach(element => {
 		element.amount = element.values.length;
@@ -47,39 +74,7 @@ function transformData(source, settings) {
 	// side effect to obtain data-extent and update settings
 	settings.render.dataExtent = getExtent(transformed);
 	drawLegend(d3.select('.legend-svg'), settings);
-	console.log(transformed);
 	return transformed;
-}
-
-function getExtent(data) {
-	let currentHighest = 0;
-	data.forEach(d => {
-		currentHighest = d3.max([d.amount, currentHighest]);
-	});
-	return [1, currentHighest];
-}
-
-function updateDataPointsAndDataExtent(
-	endpoint,
-	query,
-	g,
-	projection,
-	settings
-) {
-	if (!document.querySelector('.g-datapoints')) {
-		g.append('g').attr('class', 'g-datapoints');
-	}
-
-	d3.json(
-		endpoint + '?query=' + encodeURIComponent(query) + '&format=json'
-	).then(objects => {
-		renderDataPoints(
-			transformData(objects.results.bindings, settings),
-			g,
-			projection,
-			settings
-		);
-	});
 }
 
 function renderDataPoints(objects, g, projection, settings) {
@@ -109,25 +104,27 @@ function renderDataPoints(objects, g, projection, settings) {
 	adjustCirclesToZoomLevel(1, g, settings);
 }
 
-function showList(d, type) {
-	document.querySelector('.info').innerHTML = generateHtmlListFor(d, type);
-	document.getElementById('list-button').addEventListener('click', () => {
-		showList(d, 'list');
-	});
-	document.getElementById('image-button').addEventListener('click', () => {
-		showList(d, 'image');
-	});
-	document.querySelectorAll('.object-image').forEach(element =>
-		element.addEventListener('click', () => {
-			document
-				.querySelectorAll('.object-image')
-				.forEach(element => element.classList.remove('selected-image'));
-			element.classList.add('selected-image');
-		})
+function updateDataPointsAndDataExtent(
+	endpoint,
+	query,
+	g,
+	projection,
+	settings
+) {
+	if (!document.querySelector('.g-datapoints')) {
+		g.append('g').attr('class', 'g-datapoints');
+	}
+
+	d3.json(`${endpoint}?query=${encodeURIComponent(query)}&format=json`).then(
+		objects => {
+			renderDataPoints(
+				transformData(objects.results.bindings, settings),
+				g,
+				projection,
+				settings
+			);
+		}
 	);
-	document.getElementById('scroll-to-top').addEventListener('click', () => {
-		document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
-	});
 }
 
 export { updateDataPointsAndDataExtent };

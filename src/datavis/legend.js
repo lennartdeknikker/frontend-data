@@ -1,8 +1,9 @@
+import { d3 } from 'd3';
+
 function addLegend(settings) {
-	if (settings.legend.enabled == true) {
+	if (settings.legend.enabled === true) {
 		document.querySelector(settings.legend.targetDiv).innerHTML = '';
-		const svg = d3
-			.select(settings.legend.targetDiv)
+		d3.select(settings.legend.targetDiv)
 			.append('svg')
 			.attr('class', 'legend-svg')
 			.attr('width', settings.legend.width)
@@ -13,7 +14,7 @@ function addLegend(settings) {
 function drawLegend(svg, settings) {
 	if (
 		document.querySelector('.legend-svg') &&
-		settings.render.dataExtent[1] != 0
+		settings.render.dataExtent[1] !== 0
 	) {
 		d3.select('.g-legend').remove();
 		svg
@@ -35,10 +36,10 @@ function drawLegend(svg, settings) {
 				const svgWidth = parseInt(d3.select('.legend-svg').attr('width'));
 				return svgWidth - 135 + 100 * i;
 			})
-			.attr('cy', (d, i) => (i == 0 ? 67 : 40))
+			.attr('cy', (d, i) => (i === 0 ? 67 : 40))
 			.transition()
 			.duration(500)
-			.attr('r', (d, i) => (i == 0 ? 6 : 30))
+			.attr('r', (d, i) => (i === 0 ? 6 : 30))
 			.attr('fill', '#00827b')
 			.attr('stroke', 'white');
 
@@ -51,9 +52,7 @@ function drawLegend(svg, settings) {
 			.attr('y', 90)
 			.attr('class', 'legend_text')
 			.attr('text-anchor', 'middle')
-			.text(d => {
-				return d;
-			})
+			.text(d => d)
 			.attr('fill', 'white');
 	}
 }
