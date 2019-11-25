@@ -2,6 +2,7 @@ $c1: #ffffff;
 $c2: #c1eae8;
 $c3: #00aaa0;
 $c4: #00827b;
+$margins: 6em;
 
 html,
 body {
@@ -23,7 +24,7 @@ body {
 	background-color: $c3;
 	justify-content: space-between;
 	width: 100%;
-	padding: 0 5em;
+	padding: 0 $margins;
 	box-sizing: border-box;
 }
 
@@ -69,7 +70,7 @@ header {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	padding: 1rem 5em;
+	padding: 1rem $margins;
 }
 
 .message {
@@ -110,15 +111,16 @@ h3 {
 }
 
 .info h3 {
-	margin: 1em 1em;
+	margin: 1em 0;
 }
 
 .item-list {
 	font-weight: bold;
 	color: $c1;
 	display: flex;
+	justify-content: space-between;
 	flex-wrap: wrap;
-	margin: 0 1em;
+	margin: 1em 0 0 0;
 	padding: 0;
 }
 
@@ -133,7 +135,7 @@ h3 {
 .object-list {
 	display: flex;
 	flex-wrap: wrap;
-	padding-bottom: 5em;
+	padding-bottom: $margins;
 }
 
 .object-image {
@@ -141,8 +143,8 @@ h3 {
 	height: 10em;
 	object-fit: cover;
 	object-position: center;
-	border: 2px solid $c4;
-	margin: 0 0 1em 1em;
+	border: 1px solid $c4;
+	margin: 1em 1em 0 0;
 	cursor: pointer;
 	transition: transform 0.5s;
 	background-color: $c1;
@@ -153,21 +155,19 @@ h3 {
 	height: 5em;
 	object-fit: cover;
 	object-position: center;
-	border: 2px solid $c4;
+	border: 1px solid $c4;
 	margin-left: 1em;
 }
 
 button {
-	border: none;
+	border: 1px solid $c4;
 	background-color: $c4;
-	margin: 0.2em 0.5em 1em 1em;
 	padding: 0.5em;
 	color: $c1;
 	cursor: pointer;
 }
 
 .selected {
-	border: 2px solid $c4;
 	background-color: $c1;
 	color: $c4;
 	font-weight: bold;
@@ -180,7 +180,7 @@ button {
 	justify-content: space-between;
 	background-color: $c4;
 	padding: 1em;
-	margin: 0 1em 1em 0;
+	margin: 0 0 1em 0;
 	min-width: 15em;
 }
 
@@ -190,7 +190,11 @@ button {
 }
 
 .info {
-	padding: 0 5em;
+	padding: 0 $margins;
+}
+
+.view-buttons button:first-child {
+	margin-right: 1em;
 }
 
 .buttons {
