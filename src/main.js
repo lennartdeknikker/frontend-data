@@ -24,7 +24,8 @@ const settings = {
 	legend: {
 		enabled: true,
 		targetDiv: '#legend',
-		height: '6.5em'
+		height: '6.5em',
+		width: '150px'
 	}
 };
 

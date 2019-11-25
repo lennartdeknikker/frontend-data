@@ -34,7 +34,7 @@ body {
 	display: flex;
 	color: $c1;
 	width: 30%;
-	min-width: 25em;
+	min-width: 15em;
 	margin: 1em 0;
 }
 
@@ -182,6 +182,7 @@ button {
 	padding: 1em;
 	margin: 0 0 1em 0;
 	min-width: 15em;
+	width: 47%;
 }
 
 .selected-image {

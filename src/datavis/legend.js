@@ -32,7 +32,8 @@ function drawLegend(svg, settings) {
 		legendGroup
 			.append('circle')
 			.attr('cx', (d, i) => {
-				return 40 + 100 * i;
+				const svgWidth = parseInt(d3.select('.legend-svg').attr('width'));
+				return svgWidth - 135 + 100 * i;
 			})
 			.attr('cy', (d, i) => (i == 0 ? 67 : 40))
 			.transition()
@@ -44,7 +45,8 @@ function drawLegend(svg, settings) {
 		legendGroup
 			.append('text')
 			.attr('x', (d, i) => {
-				return 40 + 100 * i;
+				const svgWidth = parseInt(d3.select('.legend-svg').attr('width'));
+				return svgWidth - 135 + 100 * i;
 			})
 			.attr('y', 90)
 			.attr('class', 'legend_text')
