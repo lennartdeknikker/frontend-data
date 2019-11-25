@@ -1,4 +1,4 @@
-import { d3 } from 'd3';
+import * as d3 from 'd3';
 
 // adjusts the circles to the zoomlevel
 function adjustCirclesToZoomLevel(zoomLevel, g, settings) {

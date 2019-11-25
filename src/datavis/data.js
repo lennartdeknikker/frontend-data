@@ -1,4 +1,4 @@
-import { d3 } from 'd3';
+import * as d3 from 'd3';
 import { adjustCirclesToZoomLevel } from './zoom';
 import { drawLegend } from './legend';
 import { generateHtmlListFor } from './utilities';

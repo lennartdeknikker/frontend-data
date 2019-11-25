@@ -1,4 +1,4 @@
-import { d3 } from 'd3';
+import * as d3 from 'd3';
 
 // changes fill color of areas on mouse over and mouse out
 function mouseOverHandler(d) {

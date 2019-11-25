@@ -1,4 +1,4 @@
-import { d3 } from 'd3';
+import * as d3 from 'd3';
 import { updateDataPointsAndDataExtent } from './data';
 import { getQueryFor } from './utilities';
 
