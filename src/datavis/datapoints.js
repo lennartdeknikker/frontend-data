@@ -23,10 +23,14 @@ function showListFor(data, type) {
 	// add a handler to each image to enlarge those when clicked.
 	document.querySelectorAll('.object-image').forEach(objectImage =>
 		objectImage.addEventListener('click', () => {
-			document
-				.querySelectorAll('.object-image')
-				.forEach(item => item.classList.remove('selected-image'));
-			objectImage.classList.add('selected-image');
+			if (objectImage.classList.contains('selected-image'))
+				objectImage.classList.remove('selected-image');
+			else {
+				document
+					.querySelectorAll('.object-image')
+					.forEach(item => item.classList.remove('selected-image'));
+				objectImage.classList.add('selected-image');
+			}
 		})
 	);
 }
