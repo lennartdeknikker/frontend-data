@@ -1,14 +1,7 @@
 import * as d3 from 'd3';
 
-// adjusts the circles to the zoomlevel
-function adjustCirclesToZoomLevel(zoomLevel, g, settings) {
-	const minRadius = zoomLevel / 3 < 2 ? 3 - zoomLevel / 3 : 1;
-	const maxRadius = zoomLevel * 7 < 37.5 ? 40 - zoomLevel * 7 : 2.5;
-	const maxZoomLevel = settings.render.scaleExtent[1];
-	const factor =
-		(maxRadius - minRadius) /
-		(settings.render.dataExtent[1] - settings.render.dataExtent[0]);
-
+// changes the radius of the datapoint circles according to zoomlevel.
+function changeCircleRadius(g, factor, minRadius, maxRadius) {
 	g.selectAll('circle')
 		.transition()
 		.duration(500)
@@ -21,7 +14,10 @@ function adjustCirclesToZoomLevel(zoomLevel, g, settings) {
 			}
 			return d.amount * factor;
 		});
+}
 
+// changes the opacity of the datapoint circles according to zoomlevel.
+function changeCircleOpacity(g, zoomLevel, maxZoomLevel) {
 	if (zoomLevel < maxZoomLevel / 2) {
 		g.selectAll('.datapoint').attr('fill-opacity', 0.3 + 0.7 / zoomLevel);
 	} else {
@@ -29,16 +25,41 @@ function adjustCirclesToZoomLevel(zoomLevel, g, settings) {
 	}
 }
 
-async function addZoom(settings) {
+// calculates the factor on which to transform the size of the circles.
+function calculateFactor(minRadius, maxRadius, settings) {
+	return (
+		(maxRadius - minRadius) /
+		(settings.render.dataExtent[1] - settings.render.dataExtent[0])
+	);
+}
+
+// calculates the extent of the circle radius.
+function calculateRadiusExtent(zoomLevel) {
+	const min = zoomLevel / 3 < 2 ? 3 - zoomLevel / 3 : 1;
+	const max = zoomLevel * 7 < 37.5 ? 40 - zoomLevel * 7 : 2.5;
+	return [min, max];
+}
+
+// adjusts the shown datapoints to the zoomlevel using the functions above.
+function adjustCirclesToZoomLevel(zoomLevel, g, settings) {
+	const [minRadius, maxRadius] = calculateRadiusExtent(zoomLevel);
+	const maxZoomLevel = settings.render.scaleExtent[1];
+	const factor = calculateFactor(minRadius, maxRadius, settings);
+
+	changeCircleRadius(g, factor, minRadius, maxRadius);
+	changeCircleOpacity(g, zoomLevel, maxZoomLevel);
+}
+
+// creates a zoom object using the settings defined in main.js
+async function createZoomObject(settings) {
 	const zoom = d3.zoom().scaleExtent(settings.render.scaleExtent);
 	return zoom;
 }
 
+// adds zooming handlers to input.
 function addZoomHandlers(zoom, g, settings, svg) {
-	const group = g;
-
 	function zoomHandler() {
-		group.attr('transform', d3.event.transform);
+		g.attr('transform', d3.event.transform);
 		adjustCirclesToZoomLevel(d3.event.transform.k, g, settings);
 	}
 
@@ -58,22 +79,28 @@ function addZoomHandlers(zoom, g, settings, svg) {
 
 	zoom.on('zoom', zoomHandler);
 
-	// makes it possible to zoom on click with adjustable steps
+	// makes it possible to zoom on click with adjustable steps,
+	// and resets the projection when search input is changed.
 	d3.select('#btn-zoom--in').on('click', () => clickToZoom(2));
 	d3.select('#btn-zoom--out').on('click', () => clickToZoom(0.5));
 	d3.select('#search_input').on('select', () => resetProjection());
 	d3.select('#search_input').on('click', () => resetProjection());
-	return group;
+	return g;
 }
 
+// adds zoom functionality to the svg using the functions above.
 async function addZoomToSvg(settings, svg) {
-	const g = addZoom(settings).then(zoom => {
-		const zoomG = svg.call(zoom).append('g');
-		const group = addZoomHandlers(zoom, zoomG, settings, svg);
-		return group;
+	const svgWithZoom = createZoomObject(settings).then(zoom => {
+		const zoomGroup = svg.call(zoom).append('g');
+		const zoomGroupWithHandlers = addZoomHandlers(
+			zoom,
+			zoomGroup,
+			settings,
+			svg
+		);
+		return zoomGroupWithHandlers;
 	});
-
-	return g;
+	return svgWithZoom;
 }
 
 export { addZoomToSvg, adjustCirclesToZoomLevel };

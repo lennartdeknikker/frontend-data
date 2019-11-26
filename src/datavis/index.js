@@ -2,8 +2,9 @@ import * as d3 from 'd3';
 import { loadMap } from './map';
 import { addZoomToSvg } from './zoom';
 import { addSearch } from './search';
-import { addLegend } from './legend';
+import { addLegendSvg } from './legend';
 
+// Adds a datavisualisation with specific settings.
 function AddDataVisualisation(settings) {
 	document.querySelector(settings.init.targetDiv).innerHTML = '';
 	const svg = d3
@@ -13,17 +14,21 @@ function AddDataVisualisation(settings) {
 		.attr('height', settings.init.svgSize[1]);
 
 	// map and datapoint projection settings
+	const translation = [
+		window.innerWidth / settings.projection.translation[0],
+		window.innerHeight / settings.projection.translation[1],
+	];
 	const projection = d3
 		.geoMercator()
 		.center(settings.projection.center)
 		.scale(settings.projection.scale)
-		.translate(settings.projection.translation);
+		.translate(translation);
 
 	// add zoom functionality to svg, then load the map, then load the datapoints
 	addZoomToSvg(settings, svg).then(g =>
 		loadMap(settings.init.mapJson, g, projection).then(
 			addSearch(g, projection, settings, settings.init.endpoint).then(
-				addLegend(settings)
+				addLegendSvg(settings)
 			)
 		)
 	);

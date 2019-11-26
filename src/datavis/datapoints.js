@@ -1,16 +1,23 @@
 import * as d3 from 'd3';
 import { adjustCirclesToZoomLevel } from './zoom';
-import { drawLegend } from './legend';
-import { generateHtmlListFor } from './utilities';
+import { generateHtmlListFor, transformData } from './utilities';
 
-function showList(d, type) {
-	document.querySelector('.info').innerHTML = generateHtmlListFor(d, type);
+// Function generating a listing of certain data, shown either as a list of images or as details list.
+// It adds a button to toggle between both view types.
+function showListFor(data, type) {
+	// create the html showing the list,
+	document.querySelector('.info').innerHTML = generateHtmlListFor(data, type);
+	// add event handlers to the buttons toggling the view type and the 'scroll-to-top' button,
 	document.getElementById('list-button').addEventListener('click', () => {
-		showList(d, 'list');
+		showListFor(data, 'list');
 	});
 	document.getElementById('image-button').addEventListener('click', () => {
-		showList(d, 'image');
+		showListFor(data, 'image');
 	});
+	document.getElementById('scroll-to-top').addEventListener('click', () => {
+		document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
+	});
+	// add a handler to each image to enlarge those when clicked.
 	document.querySelectorAll('.object-image').forEach(objectImage =>
 		objectImage.addEventListener('click', () => {
 			document
@@ -19,13 +26,10 @@ function showList(d, type) {
 			objectImage.classList.add('selected-image');
 		})
 	);
-	document.getElementById('scroll-to-top').addEventListener('click', () => {
-		document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
-	});
 }
 
-// loads a list of selected objects
-function objectClickHandler(d) {
+// This adds an animation when a data point is clicked on,
+function objectClickHandler(object) {
 	d3.selectAll('.datapoint').attr('stroke', 'none');
 	d3.select(this)
 		.transition()
@@ -37,46 +41,23 @@ function objectClickHandler(d) {
 		.attr('stroke-alignment', 'outer')
 		.attr('stroke-width', '2pt')
 		.attr('fill', '#00827b');
-	showList(d, 'image');
+	// then calls the function above to load the object listing,
+	showListFor(object, 'image');
+	// then scrolls down to get that listing into view.
 	document.querySelector('.info').scrollIntoView({ behavior: 'smooth' });
 }
 
+// These functions change datapoint colors on hover
 function objectMouseoverHandler() {
 	if (d3.select(this).attr('stroke') !== '#00aaa0')
 		d3.select(this).attr('fill', '#00aaa0');
 }
-
 function objectMouseoutHandler() {
 	if (d3.select(this).attr('stroke') !== '#00aaa0')
 		d3.select(this).attr('fill', '#00827b');
 }
 
-function getExtent(data) {
-	let currentHighest = 0;
-	data.forEach(d => {
-		currentHighest = d3.max([d.amount, currentHighest]);
-	});
-	return [1, currentHighest];
-}
-
-function transformData(source, settings) {
-	const transformed = d3
-		.nest()
-		.key(d => d.placeName.value)
-		.entries(source);
-	transformed.forEach(element => {
-		element.amount = element.values.length;
-		element.placeName = element.values[0].placeName.value;
-		element.long = element.values[0].long.value;
-		element.lat = element.values[0].lat.value;
-	});
-
-	// side effect to obtain data-extent and update settings
-	settings.render.dataExtent = getExtent(transformed);
-	drawLegend(d3.select('.legend-svg'), settings);
-	return transformed;
-}
-
+// Renders or updates datapoints.
 function renderDataPoints(objects, g, projection, settings) {
 	const datapoints = d3
 		.select('.g-datapoints')
@@ -104,19 +85,15 @@ function renderDataPoints(objects, g, projection, settings) {
 	adjustCirclesToZoomLevel(1, g, settings);
 }
 
-function updateDataPointsAndDataExtent(
-	endpoint,
-	query,
-	g,
-	projection,
-	settings
-) {
+// If necessary creates a new group for drawing datapoints,
+function updateDataPoints(endpoint, query, g, projection, settings) {
 	if (!document.querySelector('.g-datapoints')) {
 		g.append('g').attr('class', 'g-datapoints');
 	}
-
+	// then obtains new data from the server,
 	d3.json(`${endpoint}?query=${encodeURIComponent(query)}&format=json`).then(
 		objects => {
+			// then (re)renders the datapoints.
 			renderDataPoints(
 				transformData(objects.results.bindings, settings),
 				g,
@@ -127,4 +104,4 @@ function updateDataPointsAndDataExtent(
 	);
 }
 
-export { updateDataPointsAndDataExtent };
+export { updateDataPoints };

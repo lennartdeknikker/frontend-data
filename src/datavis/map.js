@@ -1,11 +1,11 @@
 import * as d3 from 'd3';
 
-// changes fill color of areas on mouse over and mouse out
+// changes fill color of areas on mouse over and mouse out,
+// and show the hovered over area as text.
 function mouseOverHandler(d) {
 	d3.select('#map_text').text(d.properties.NAME_1);
 	d3.select(this).attr('fill', '#9aeae6');
 }
-
 function mouseOutHandler() {
 	d3.select('#map_text').text('');
 	const element = d3.select(this);
@@ -13,6 +13,7 @@ function mouseOutHandler() {
 		element.attr('fill', 'white');
 	}
 }
+
 // renders the map from a given geoJson
 async function renderMap(geoJson, g, projection) {
 	const path = d3.geoPath().projection(projection);
@@ -32,6 +33,7 @@ async function renderMap(geoJson, g, projection) {
 		.on('mouseout', mouseOutHandler);
 }
 
+// fetches the data, then renders the map
 async function loadMap(geoJson, g, projection) {
 	await d3.json(geoJson).then(mapData => renderMap(mapData, g, projection));
 }

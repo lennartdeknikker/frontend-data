@@ -1,3 +1,6 @@
+import * as d3 from 'd3';
+import { updateLegend } from './legend';
+
 function getQueryFor(searchWord) {
 	return `
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -16,7 +19,7 @@ function getQueryFor(searchWord) {
     SELECT (SAMPLE(?identifier) AS ?identifierSample) ?title ?placeName ?imageLink ?extent ?lat ?long WHERE {
       <https://hdl.handle.net/20.500.11840/termmaster7745> skos:narrower* ?place .
       ?place skos:prefLabel ?placeName .
-      VALUES ?type {"${searchWord}"}
+      VALUES ?type {"${searchWord.toLowerCase()}"}
       ?cho    dct:spatial   ?place ;
               dc:title      ?title ;
               dc:type       ?type ;
@@ -80,4 +83,31 @@ function generateHtmlListFor(objects, view) {
 	return newHtml;
 }
 
-export { getQueryFor, generateHtmlListFor };
+function getExtentFrom(data) {
+	let currentHighest = 0;
+	data.forEach(d => {
+		currentHighest = d3.max([d.amount, currentHighest]);
+	});
+	return [1, currentHighest];
+}
+
+// This nests given data on location and adds an 'amount' property per location.
+function transformData(source, settings) {
+	const transformed = d3
+		.nest()
+		.key(d => d.placeName.value)
+		.entries(source);
+	transformed.forEach(element => {
+		element.amount = element.values.length;
+		element.placeName = element.values[0].placeName.value;
+		element.long = element.values[0].long.value;
+		element.lat = element.values[0].lat.value;
+	});
+
+	// side effect to obtain data-extent and update settings accordingly
+	settings.render.dataExtent = getExtentFrom(transformed);
+	updateLegend(d3.select('.legend-svg'), settings);
+	return transformed;
+}
+
+export { getQueryFor, generateHtmlListFor, getExtentFrom, transformData };
