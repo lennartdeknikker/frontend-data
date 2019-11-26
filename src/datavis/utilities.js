@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import { updateLegend } from './legend';
 
+// generates a query given a certain searchword.
 function getQueryFor(searchWord) {
 	return `
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -33,6 +34,7 @@ function getQueryFor(searchWord) {
     `;
 }
 
+// generates a button.
 function generateButtonIn(target, id, text) {
 	return target
 		.append('button')
@@ -40,10 +42,12 @@ function generateButtonIn(target, id, text) {
 		.text(text);
 }
 
+// generates a div.
 function generateDivIn(target, className) {
 	return target.append('div').attr('class', className);
 }
 
+// calculates the data extent
 function getExtentFrom(data) {
 	let currentHighest = 0;
 	data.forEach(d => {

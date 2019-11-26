@@ -5,14 +5,14 @@ import { generateButtonIn, generateDivIn } from './utilities';
 function generateListHeader(target, objects) {
 	target
 		.append('h3')
-		.text(`List of ${objects.amount} objects found at ${objects.placeName}`);
+		.text(`Lijst met ${objects.amount} objecten uit ${objects.placeName}`);
 
 	const buttonsDiv = generateDivIn(target, 'buttons');
 	const viewButtonsDiv = generateDivIn(buttonsDiv, 'view-buttons');
 
-	generateButtonIn(viewButtonsDiv, 'image-button', 'images');
+	generateButtonIn(viewButtonsDiv, 'image-button', 'Afbeeldingen');
 	generateButtonIn(viewButtonsDiv, 'list-button', 'details');
-	generateButtonIn(buttonsDiv, 'scroll-to-top', 'back to top');
+	generateButtonIn(buttonsDiv, 'scroll-to-top', 'Terug naar boven');
 
 	return target;
 }
@@ -35,15 +35,12 @@ function generateListView(targetDiv, objects) {
 		.append('img')
 		.attr('src', d => `${d.imageLink.value}`)
 		.attr('class', 'object-image-list');
-	subItemList.append('li').text(d => `Identifier: ${d.identifierSample.value}`);
-	subItemList.append('li').text(d => `Extent: ${d.extent.value}`);
+	subItemList.append('li').text(d => `ID code: ${d.identifierSample.value}`);
+	subItemList.append('li').text(d => `Grootte: ${d.extent.value}`);
 	subItemList
 		.append('li')
 		.text(
-			d =>
-				`Origin location: ${d.placeName.value} (${d.lat.value}, ${
-					d.long.value
-				})`
+			d => `Vindplaats: ${d.placeName.value} (${d.lat.value}, ${d.long.value})`
 		);
 	document.getElementById('list-button').classList.add('selected');
 }
