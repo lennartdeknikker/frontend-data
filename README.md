@@ -3,28 +3,10 @@
 # Indonesian Ancestor Statues Map
 this repo contains my assignment material for the course [Frontend Data](https://github.com/cmda-tt/course-19-20). The assignment entails visualizing data obtained from the Museum Volkenkunde's objects database using the [D3 Library](https://github.com/d3/d3).
 
-**This current version shows all Indonesian ancestor statues on a map.**
-
-I've tried to build it in a way this code can be used to show any kind of objects on any kind of map, keeping in mind the [key concepts of functional programming](https://github.com/lennartdeknikker/functional-programming/wiki/About-functional-programming-in-JavaScript)
+I've tried to build it in a way this code can at a later stadium be used to show any kind of objects on any kind of map, keeping in mind the [key concepts of functional programming](https://github.com/lennartdeknikker/functional-programming/wiki/About-functional-programming-in-JavaScript). Right now, the application makes it possible to only browse Indonesian objects, by searching for a keyword. The objects are then shown on a map with dots corresponding in size to the amounts of objects found at certain locations. 
 
 ## Concept and screenshots
-The concept is to show certain objects, in this case Indonesian ancestor statues on a map. The user must be able to see where these objects come from and how many were brought from each location.
-
-*Starting scale*
-![screenshot](./wiki-resources/screenshots/current_application_screenshot.png)
-
-As you can see in these screenshots, the amount is shown by the size of te circles and the locations are plotted on the map.
-Because some circles are plotted on top of each other, I added some opacity when zooming.
-
-*Zoomed halfway*
-![screenshot](./wiki-resources/screenshots/current_application_screenshot2.png)
-
-As you zoom in some more, the circles will shrink and lose their opacity so it's easier to see at what exact locations the statues are found.
-
-*Maximal zoom*
-![screenshot](./wiki-resources/screenshots/current_application_screenshot3.png)
-
-Check out my [wiki](https://github.com/lennartdeknikker/frontend-data/wiki/) for more information on the concept.
+As explained above, the key idea is to enable visitors of the [Museum Volkenkunde](https://www.volkenkunde.nl/) to explore the (Indonesian) collection online. The screenshots below will show how that's done:
 
 ## Usage
 1. clone this repo using `git clone https://github.com/lennartdeknikker/frontend-data.git`

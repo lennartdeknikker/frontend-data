@@ -1,39 +1,7 @@
 import * as d3 from 'd3';
 import { adjustCirclesToZoomLevel } from './zoom';
 import { transformData } from './utilities';
-import { generateListFor } from './list';
-
-// Function generating a listing of certain data, shown either as a list of images or as details list.
-// It adds a button to toggle between both view types.
-function showListFor(data, type) {
-	// create the html showing the list,
-	generateListFor(document.querySelector('.info'), data, type);
-	// document.querySelector('.info').innerHTML = generateHtmlListFor(data, type);
-	// add event handlers to the buttons toggling the view type and the 'scroll-to-top' button,
-	document.getElementById('list-button').addEventListener('click', () => {
-		showListFor(data, 'list');
-	});
-	document.getElementById('image-button').addEventListener('click', () => {
-		document.getElementById('image-button').classList.add('selected');
-		showListFor(data, 'image');
-	});
-	document.getElementById('scroll-to-top').addEventListener('click', () => {
-		document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
-	});
-	// add a handler to each image to enlarge those when clicked.
-	document.querySelectorAll('.object-image').forEach(objectImage =>
-		objectImage.addEventListener('click', () => {
-			if (objectImage.classList.contains('selected-image'))
-				objectImage.classList.remove('selected-image');
-			else {
-				document
-					.querySelectorAll('.object-image')
-					.forEach(item => item.classList.remove('selected-image'));
-				objectImage.classList.add('selected-image');
-			}
-		})
-	);
-}
+import { showListFor } from './list';
 
 // This adds an animation when a data point is clicked on,
 function objectClickHandler(object) {
