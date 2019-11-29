@@ -61,6 +61,8 @@ The whole process of building the application and more in depth information on t
 ## Used Data
 The data used in this application is provided by the [Museum Volkenkunde](https://www.volkenkunde.nl/). They recently published their collection data. The data is obtained using [SPARQL](https://en.wikipedia.org/wiki/SPARQL) queries. The query used in this example is part of the code and can easily be changed to obtain different data to plot on the map. More information on the used data and queries can be found in the [wiki](https://github.com/lennartdeknikker/frontend-data/wiki/)
 
+The data is added to the visualisation using the [d3 update pattern](https://github.com/lennartdeknikker/frontend-data/wiki/Working-with-D3).
+
 ## References
 This application is built with:
 - [the D3 Library](https://github.com/d3/d3)
@@ -78,3 +80,7 @@ This application is built with:
 I started off with [Ivan Ha](https://github.com/ivan-ha)'s [d3-hk-map](https://github.com/ivan-ha/d3-hk-map/blob/development/hongkong.js) to get acquainted with mapping data using the [D3 library](https://github.com/d3/d3). This has been very helpful to get the zoom functionality working and making it possible to select different areas on the map as well.
 
 Currently the application uses [Rifani Frestiyanto](https://github.com/rifani)'s [geoJson files](https://github.com/rifani/geojson-political-indonesia).
+
+Also thanks to:
+- [Netlify.com](https://www.netlify.com/) for hosting the application.
+- [Emancipator](http://emancipatormusic.com/) for providing musical support while I was programming.
