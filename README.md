@@ -5,22 +5,52 @@ this repo contains my assignment material for the course [Frontend Data](https:/
 
 I've tried to build it in a way this code can at a later stadium be used to show any kind of objects on any kind of map, keeping in mind the [key concepts of functional programming](https://github.com/lennartdeknikker/functional-programming/wiki/About-functional-programming-in-JavaScript). Right now, the application makes it possible to only browse Indonesian objects, by searching for a keyword. The objects are then shown on a map with dots corresponding in size to the amounts of objects found at certain locations. 
 
-## Concept and screenshots
-As explained above, the key idea is to enable visitors of the [Museum Volkenkunde](https://www.volkenkunde.nl/) to explore the (Indonesian) collection online. The screenshots below will show how that's done:
+## Concept
+The key idea behind this application is to enable visitors of the [Museum Volkenkunde](https://www.volkenkunde.nl/) to explore the (Indonesian) collection online. For now it seemed best to focus on one location first, so the application just works for Indonesian objects. Users can search for keywords and explore the origin locations of the objects on a map. The map shows at what locations objects are found and how many. Users can also click on the points shown on the map to get a more detailed list and pictures of the objects found there. More information on the concept can be found in the [wiki](https://github.com/lennartdeknikker/frontend-data/wiki/Concept). 
+
+## Screenshots
+Users can browse the map of Indonesia, search for objects and see those projected on the map.
+![screenshot1](https://github.com/lennartdeknikker/frontend-data/blob/master/wiki-resources/screenshots/screenshot3.png)
+To get more detail on certain objects, users can click the dots that appear to see what specific objects are found there.
+
+![screenshot7](https://github.com/lennartdeknikker/frontend-data/blob/master/wiki-resources/screenshots/screenshot7.png)
+
+To see more screenshots showing all functionalities in depth, check out [this page](https://github.com/lennartdeknikker/frontend-data/wiki/Screenshots) in the wiki.
 
 ## Usage
 1. clone this repo using `git clone https://github.com/lennartdeknikker/frontend-data.git`
-2. Open `index.html` to view the application
+2. Use `npm install` to install dependencies.
+3. You can get the application running using `npm run dev`. or build the application using `npm run build`.
 
 ## Settings
-Right now, there's a few settings to make it easier to work with different data, but I plan to have the code automatically adapt to different datasets or maps.
+Right now, there's a few settings to make it easier to work with different data, but I plan to have the code automatically adapt to different datasets or maps. Currently these settings are stored in `settings.json`. These can be changed to get the application running with other .geoJson files or different datasets.
 
-```
-const settings = {
-  scaleExtent: [.5, 20],
-  minValueInData: 3,
-  maxValueInData: 200
+```json
+{
+	"init": {
+		"targetDiv": "#map_container",
+		"endpoint": "https://api.data.netwerkdigitaalerfgoed.nl/datasets/ivo/NMVW/services/NMVW-29/sparql",
+		"keyWord": "",
+		"mapJson": "https://raw.githubusercontent.com/rifani/geojson-political-indonesia/master/IDN_adm_1_province.json",
+		"svgSize": ["100%", "100%"]
+	},
+	"render": {
+		"scaleExtent": [0.5, 20],
+		"dataExtent": [0, 1]
+	},
+	"projection": {
+		"center": [120, -5],
+		"scale": 1400,
+		"translation": [2, 2.6]
+	},
+	"legend": {
+		"enabled": true,
+		"targetDiv": "#legend",
+		"height": "6.5em",
+		"width": "150px"
+	}
 }
+
 ```
 
 ## References
